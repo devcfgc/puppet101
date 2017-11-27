@@ -41,3 +41,9 @@ This is a repository for testing purpose particularly for experiment with new pu
   - `mkdir /etc/puppetlabs/r10k`
   - `vim /etc/puppetlabs/r10k/r10k.yaml` (you need to copy and paste the content from the file r10k.yaml from this repository)
   - `r10k deploy environment -p` deploy environment to the repository
+
+### Using docker
+  - `docker exec -it web.puppet.vm bash`
+  - `docker exec -it db.puppet.vm bash`
+  - `puppet cert list`
+  - `puppet cert sign -a`
