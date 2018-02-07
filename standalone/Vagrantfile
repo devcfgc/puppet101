@@ -1,0 +1,12 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-16.04"
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo su
+    echo 'Etc/UTC' > /etc/timezone && dpkg-reconfigure tzdata &> /dev/null
+    echo 'sudo su' >> /home/vagrant/.bashrc
+    echo "Done..."
+  SHELL
+end
