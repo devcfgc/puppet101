@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = 'puppetserver101'
+  config.vm.box = "bento/centos-7.5"
+  config.vm.hostname = 'master.vagrant.local'
+  config.vm.network 'private_network', ip: '172.31.0.201'
+  config.vm.synced_folder '../', '/vagrant', :mount_options => ['dmode=775', 'fmode=644']
+  config.vm.provider 'virtualbox' do |vb|
+    vb.memory = '2048'
+  end
+
+  config.vm.provision 'shell', inline: <<-SHELL
+    echo '######## Adding `sudo su` to the `.bashrc` for `vagrant` user ########'
+    echo 'sudo su' >> /home/vagrant/.bashrc
+
+    sudo rm -f /etc/localtime && ln -s /usr/share/zoneinfo/UTC /etc/localtime
+
+    echo '######## Puppet Server Scripts ########'
+    bash /vagrant/puppetserver/scripts/puppetserver.sh
+
+  SHELL
+end
